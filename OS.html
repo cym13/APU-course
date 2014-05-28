@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./main.css" type="text/css"/>
+    <title>Operating Systems</title>
+  </head>
+
+  <body>
+    <h1>Operating Systems</h1>
+
+    <h2>Introduction</h2>
+    <h3>What is an OS?</h3>
+    <p>
+    It refers to a complex system software which manages:
+      <ol>
+        <li>all IO devices connected to a computer</li>
+        <li>all the internal components of a computer</li>
+        <li>other applications installed on a computer</li>
+        <li>the space in RAM</li>
+        <li>the space in HD</li>
+        <li>the files and folders</li>
+        <li>data on a computer</li>
+        <li>CPU's valuable time efficiently</li>
+      </ol>
+    </p>
+    <h2>Process Management</h2>
+    <h3>(CPU scheduling algorithms)</h3>
+    <em>Process: running program - set of tasks with associated memory.</em>
+    <p>
+    A program becomes a process at the moment it enters into the CPU.
+    </p>
+    <p>
+    This is a program. It it composed of instructions:
+    <ol id="code">
+      <li><span>int c, b, total</span></li>
+      <li><span>c = 5</span></li>
+      <li><span>b = 10</span></li>
+      <li><span>total = c + b</span></li>
+      <li><span>print total</span></li>
+    </ol>
+    </p>
+    <p>
+      <ul>
+        <li>Each os has a special software which manages all the running
+        programs (processes).</li>
+        <li>The special software is called "CPU Scheduling Algorithms".</li>
+        <li>There are numerous CPU Scheduling Algorithms.</li>
+        <li>Each CPU Scheduling Algorithms has its own weakness and
+        strengths.</li>
+      </ul>
+      <ol>
+        <li>FCFS - First come First served CpuSA</li>
+        <li>Priority CpuSA</li>
+        <li>Shortest Job First CpuSA</li>
+        <li>RR - Round Robin CpuSA</li>
+      </ol>
+    </p>
+    <p>
+      We use to compute the average waiting time for the processes and the
+      average turnarround time (the turnarround time is the sum for each
+      process of the waiting time and the execution time).
+    </p>
+    <em>
+      Turnaround = Process's CPU burst time (duration of each process spend
+      inside the CPU) + process's waiting time.
+    </em>
+
+    <h3>FCFS - First Come First Serve</h3>
+    <p>
+      Ready queue contains future tasks. Each needs the CPU for a little
+      time. One after the other, they hold the CPU for that time.
+    </p>
+    <ol id="code">
+    <li><span>+---------------------------------------------------------------------+</span></li>
+    <li><span>| P1         | P2            |  P3          |  P4          | P5       |</span></li>
+    <li><span>|  10ms      |  1ms          |   2ms        |   1ms        |  1ms     |</span></li>
+    <li><span>+---------------------------------------------------------------------+</span></li>
+    </ol>
+    <p>
+    The FCFS is the simplest (not an efficient) CpuSA. In this algorithm,
+    the CPU invites each process according to its arrival time. The process
+    found in the front position in the "ready queue" will be invited for
+    execution first. Each process is executed in a sequential order. Even CPU
+    can no preempt (force to exit) any process befor it's allocated CPU's
+    burst time is over. Each process will stay inside the CPU until it's
+    CPU allocated burst time is over.
+    </p>
+
+    <ol id="code">
+      <li><span>while True:</span></li>
+      <li><span>    if len(queue) == 0:</span></li>
+      <li><span>        continue</span></li>
+      <li><span>    queue.pop().run()</span></li>
+    </ol>
+
+    <h3>SJF - Shortest Job First</h3>
+    <p>
+    The SJF is an algorithm in wich the job with the shortest needed time
+    will be invited first, the other ones will be delayed. It can become
+    non-preemptive (once a task began, the CPU can't ask it to leave) or
+    preemptive (giving more power to the CPU). If preemptive, the CPU can
+    ask for a task not to be delayed infinitely if longer than any other
+    (well, actually there are enough idle time in the CPU for that not to
+    happen often). This algorithm provides better performance than FCFS.
+    </p>
+    <ol id="code">
+    <li><span>+--------------------------------------------------------------------+</span></li>
+    <li><span>| P1         | P2           |  P3          |  P4          | P5       |</span></li>
+    <li><span>|  4ms       |  9ms         |   12ms       |   13ms       |  15ms    |</span></li>
+    <li><span>+--------------------------------------------------------------------+</span></li>
+    </ol>
+    <p>
+    To do all that, some computations are needed (to look at the length of
+    the tasks and to compare them). That is not negligible but performances
+    are still better than FCFS.
+    </p>
+    <ol id="code">
+      <li><span>from operator import attrgetter</span></li>
+      <li><span>while True:</span></li>
+      <li><span>    queue.pop(queue.index(</span></li>
+      <li><span>        max(queue, key=attrgetter("priority"),</span></li>
+      <li><span>            reverse=True))).run()</span></li>
+    </ol>
+
+    <h3>Priority CPU Scheduling Algorithm</h3>
+    <p>
+    In this algorithm, each process enters with a priority number (between
+    0 and 4095) given by the OS. Some may consider the lowest numbers as
+    the ones with the lowest priority. In our examples, 0 means the highest
+    priority. It provides better performance than FCFS and SJF.
+    </p>
+    <ol id="code">
+    <li><span>+--------------------------------------------------------------------+</span></li>
+    <li><span>| P1         | P2           |  P3          |  P4          | P5       |</span></li>
+    <li><span>|  14ms(0)   |  9ms(0)      |   19ms(3)    |   13ms(7)    |  15ms(9) |</span></li>
+    <li><span>+--------------------------------------------------------------------+</span></li>
+    </ol>
+    <p>
+    This algorithm has a great problem: process starvation. Low priority
+    processes may wait forever because this algorithm is most of the time
+    preemptive. The solution to that is to use an "aging technique": for
+    example each time (time decided beforehand) the process waits, its
+    priority is decremented (or incremented).
+    </p>
+    <p>
+    If two processes have the same priority number, then the one that
+    entered the queue first is computed first.
+    </p>
+    <ol id="code">
+      <li><span>from operator import attrgetter</span></li>
+      <li><span>while True:</span></li>
+      <li><span>    queue.pop(queue.index(</span></li>
+      <li><span>        max(queue, key=attrgetter("priority"),</span></li>
+      <li><span>            reverse=True))).run()</span></li>
+      <li><span>    for index in range(queue):</span></li>
+      <li><span>        if queue[index].priority > 0:
+      <li><span>            queue[index].priority -= 1</span></li></span></li>
+    </ol>
+
+
+    <h3>RR - Round Robin CPU Scheduling Algorithm</h3>
+    <p>
+    In this algorithm, a timeout is decided beforehand and no process can
+    stay in the CPU longer than this timeout. If it needs less time, it ends.
+    Otherwise its needed time decreases (obviously) and it goes back to the
+    end of the waiting queue.
+    </p>
+    <ol id="code">
+      <li><span>while True:</span></li>
+      <li><span>    if len(queue) == 0:</span></li>
+      <li><span>        continue</span></li>
+      <li><span>    process = queue.pop()</span></li>
+      <li><span></span></li>
+      <li><span>    for t in range(timeout):</span></li>
+      <li><span>        process.step()</span></li>
+      <li><span>        process.time_needed -= 1</span></li>
+      <li><span>        if process.time_needed == 0:</span></li>
+      <li><span>            break</span></li>
+      <li><span>         elif t == timeout - 1:</span></li>
+      <li><span>             queue.insert(0, process)</span></li>
+    </ol>
+    <p>
+    It is one of the most
+    efficient algorithm and uses the concept of "time slice" giving each
+    process an equal time. Each processes are invited in a sequential order.
+    No process is allowed to overstay in the CPU, at the moment the allocated
+    time-slice expires, the process *must exit* and return to the end of
+    the waiting queue.
+    </p>
+
+    <h2>Memory Management</h2>
+    <h4>Page:</h4>
+    <p>
+    A page, memory page or virtual page is a fixed-length contiguous block of
+    virtual memory, and it is the smallest unit of data for the following:
+    </p>
+    <ol>
+      <li>memory allocation performed by the OS for a program</li>
+      <li>transfer between main memory and any other auxiliary store, such as
+      a hard disk drive.
+      </li>
+    </ol>
+
+    <h4>Frame:</h4>
+    <p>
+    The user-area in RAM is sub-divided into equal-sized small
+    partitions. Each partition is called frame. Each frame can hold only one
+    page at a time.
+    </p>
+
+    <h4>
+    Swapper:
+    </h4>
+    <p>
+    It is a software. It is a component of an OS. It handles the
+    processes. It does the job of "swap-in" and "swap-out" the processes to
+    and from RAM and the backing-store.
+    </p>
+
+    <h4>
+    Pager:
+    </h4>
+    <p>
+    It is a software. It is a component of an OS. It handles pages. It
+    does the job of transfering the "pages" to and from RAM and the
+    backing-store.
+    </p>
+
+    <img src="./images/process_pages.gif" alt="Process pages"></img>
+
+    <h4>
+    Backing-store:
+    </h4>
+    <p>
+    It refers to a HD, an external storage.
+    </p>
+
+    <h4>Swap-in</h4>
+    <p>
+    It is an activity. Whenever the CPU needs a process, the needed process
+    will be "swapped-in" (transferred) from the backing-store to the RAM.
+    </p>
+
+    <h4>Swap-out</h4>
+    <p>
+    It is an activity. Whenever the CPU does not need a process, the unwanted
+    process will be "swapped-out" (transferred) from the RAM to the
+    backing-store.
+    </p>
+
+    <img src="./images/process_swapping.jpg" alt="Process swapping"></img>
+
+    <h4>Memory allocation</h4>
+
+    <ol id="code">
+<li><span>+------------+          +------------+          +------------+</span></li>
+<li><span>|            |          |            |          |            |</span></li>
+<li><span>|  OS Area   |          |  OS Area   |          |  OS Area   |</span></li>
+<li><span>|            |          |            |          |            |</span></li>
+<li><span>|            |          |            |          |            |</span></li>
+<li><span>+------------+          +------------+          +------------+</span></li>
+<li><span>|////////////|\         |            |\         |            |\</span></li>
+<li><span>|////////////| |        |  Process   | |        |  Process   | |</span></li>
+<li><span>|///      ///| |        |     1      | |        |     1      | |</span></li>
+<li><span>|/// Free ///| |        |            | |        |            | |</span></li>
+<li><span>|/// Hole ///| |        |            | |        |            | |</span></li>
+<li><span>|/// Area ///| |        +------------+ |        +------------+ |</span></li>
+<li><span>|///      ///| |        |////////////| |        |            | |</span></li>
+<li><span>|////////////| |        |////////////| |        |  Process   | |</span></li>
+<li><span>|////////////| |        |////////////| |        |     2      | |</span></li>
+<li><span>|////////////| |        |////////////| |        |            | |</span></li>
+<li><span>|////////////| |  USER  |////////////| |  USER  +------------+ |  USER</span></li>
+<li><span>|////////////| |-       |////////////| |-       |////////////| |-</span></li>
+<li><span>|////////////| |  AREA  |////////////| |  AREA  |////////////| |  AREA</span></li>
+<li><span>|////////////| |        |///      ///| |        |///      ///| |</span></li>
+<li><span>|////////////| |        |/// Free ///| |        |/// Free ///| |</span></li>
+<li><span>|////////////| |        |/// Hole ///| |        |/// Hole ///| |</span></li>
+<li><span>|////////////| |        |/// Area ///| |        |/// Area ///| |</span></li>
+<li><span>|////////////| |        |///      ///| |        |///      ///| |</span></li>
+<li><span>|////////////| |        |////////////| |        |////////////| |</span></li>
+<li><span>|////////////| |        |////////////| |        |////////////| |</span></li>
+<li><span>|////////////| |        |////////////| |        |////////////| |</span></li>
+<li><span>|////////////| |        |////////////| |        |////////////| |</span></li>
+<li><span>|////////////|/         |////////////|/         |////////////|/</span></li>
+<li><span>+------------+          +------------+          +------------+</span></li>
+    </ol>
+
+    <img src="./images/memory_allocation.jpg"></img>
+
+    <h2>Memory Fragmentation</h2>
+    <h3>External Fragmentation and it's solution</h3>
+
+    <p>
+    The dynamic memory allocation suffers from a problem called "External
+    fragmentation".
+    </p>
+    <p>
+    In som situations even though the total of all the free holeareas is
+    bigger than the size of the needy process [PI], the free hole area cannot
+    be used by the needy process. The reason is the free hole areas are not
+    found at one location. They are found at different location in RAM.
+    </p>
+
+    <p>
+    Solution: Compaction
+    </p>
+    <p>
+    All the free hole areas are merged together to make a big free hole area.
+    So that the big free hole area can be used to accomodate any needy
+    process.
+    </p>
+
+    <ol id="code">
+      <li><span>
+      Allocation -> Allocation -> Space problem -> Compaction -> Allocation
+       </span></li>
+    </ol>
+
+    <h3>Internal Fragmentation:</h3>
+
+    <p>
+    Pifferences between two size of memory partition and two size of a needy
+    process. There is no solution to solve the problem. In the fixed memory
+    partition, the free space areas can not be merged and reused.
+    </p>
+
+    <img src="./images/fragmentation.gif"/></img>
+
+    <h2>Page-replacement algorithms</h2>
+
+    <h3>FIFO - First In, First Out</h3>
+
+    <p>
+    When a page is already present in a frame in RAM, the system does not
+    lose time loading it, the computation is faster. This is called
+    "page hit". If the page is not present in memory, the CPU has to load it,
+    it is called "page fault".
+    </p>
+
+    <p>
+    The list of page calls is named the page-reference string. It's a set of
+    page numbers.
+    </p>
+
+    <ol id="code">
+      <li><span>7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1</span></li>
+      <li><span></span></li>
+      <li><span>7 7 7 2 P 2 2 4 4 4 0 P P 0 0 P P 7 7 7</span></li>
+      <li><span>  0 0 0 H 3 3 3 2 2 2 H H 1 1 H H 1 0 0</span></li>
+      <li><span>    1 1   1 0 0 0 3 3     3 2     2 2 1</span></li>
+    </ol>
+
+    <p>
+    In the FIFO algorithm, pages are placed in frames as long as there are
+    frames available. If all frames are occupied, and there is a page fault,
+    then the older page pops out of it's frame and the needed page takes its
+    place.
+    </p>
+
+    <p>
+    This is a simple page-replacement algorithm. The CPU pages out the page
+    which was brought into RAM first. It is not an efficient page-replacement
+    algorithm because is causes too many page-fault events.
+    </p>
+
+    <ol id="code">
+      <li><span>def fifo(rs):</span></li>
+      <li><span>    buf = []</span></li>
+      <li><span>    page_fault = 0</span></li>
+      <li><span>    for each in rs:</span></li>
+      <li><span>        print(each, "\t->\t", buf)</span></li>
+      <li><span>        if each not in buf:</span></li>
+      <li><span>            page_fault += 1</span></li>
+      <li><span>            if len(buf) < 3:</span></li>
+      <li><span>                buf.append(each)</span></li>
+      <li><span>            else:</span></li>
+      <li><span>                buf[0], buf[1], buf[2] = buf[1], buf[2], each</span></li>
+      <li><span></span></li>
+      <li><span>    return page_fault</span></li>
+    </ol>
+
+    <h3>Least Recently Used</h3>
+
+    <p>
+    The LRU is one of the most efficient page-replacement algorithms. It is an
+    efficient algorithm as it causes a minimum number of page faults events.
+    </p>
+    <p>
+    In this algorithm, the CPU pages-out the page, which has not been
+    referenced [used] for the longest period of time.
+    </p>
+
+    <ol id="code">
+      <li><span>7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1</span></li>
+      <li><span></span></li>
+      <li><span>7 7 7 2 P 2 P 4 4 4 0 P P 1 P 1 P 1 P P</span></li>
+      <li><span>  0 0 0 H 0 H 0 0 3 3 H H 3 H 0 H 0 H H</span></li>
+      <li><span>    1 1   3   3 2 2 2     2   2   7    </span></li>
+    </ol>
+
+    <ol id="code">
+      <li><span>def lru(rs):</span></li>
+      <li><span>    buf = []</span></li>
+      <li><span>    page_fault = 0</span></li>
+      <li><span>    for each in rs:</span></li>
+      <li><span>        print(each, "\t->\t", buf)</span></li>
+      <li><span>        if each not in buf:</span></li>
+      <li><span>            page_fault += 1</span></li>
+      <li><span>            if len(buf) >= 3:</span></li>
+      <li><span>                buf.pop()</span></li>
+      <li><span>        else:</span></li>
+      <li><span>            buf.remove(each)</span></li>
+      <li><span></span></li>
+      <li><span>        buf.insert(0, each)</span></li>
+      <li><span></span></li>
+      <li><span>    return page_fault</span></li>
+    </ol>
+
+    <h3>Belady's anomaly</h3>
+    <p>
+    Belady si an OS expert. She discovered that the number of page faults
+    that each page replacement algorithm produces highly depends of the
+    number of frames found inside RAM. She also found that when the number of
+    frames goes up, the number of page faults goes down.
+    </p>
+    <p>
+    However, the OS experts discovered later that only the FIFO algorithm
+    caused more page faults when the number of frames inside the RAM decreases.
+    </p>
+
+    <h2>Alloctation strategies</h2>
+    <h3>First-Fit Strategy</h3>
+    <p>
+    Each OS use one of the strategies. In the first-fit strategy, the CPU
+    will start it's searching from the first free-hole found inside the RAM.
+    The CPU stops its searching operation at the moment it finds the first
+    free hole area which can accomodate the needy process.
+    </p>
+    <p>
+    If the size of the needy process p1 is 70kB, the CPU will move it into
+    the firt suitable freehole area.
+    </p>
+    <h3>Best-Fit Strategy</h3>
+    <p>
+    It is the best strategy among the 3 strategies. In this strategy, the
+    CPU searches the entire free hole list in order to find the smallest free
+    hole which can accomodate the needy process.
+    </p>
+    <p>
+    The CPU stops is's searching operation at the moment it finds the
+    stmallest free hole which can accomodate the needy process. So the CPU
+    will move the needy process into the free hole area which proposes the
+    smallest memory wastage.
+    </p>
+    <h3>Worst-Fit Strategy</h3>
+    <p>
+    No OS uses this strategy, because in this trategy, the CPU searches the
+    entire free hole list in order to find the biggest free hole area which
+    can accomodate the needy process. The CPU stops it's searching operation,
+    at the moment it finds the biggest free hole to accomodate the needy
+    process. So the CPU will move the needy process into the free hole which
+    proposes the biggest memory wastage.
+    </p>
+
+    <h2>Deadlocks</h2>
+    <p>
+    A Deadlocks is an unexpected event that occurs on our computer system
+    when the process P1 needs a resource R1 which is currently being used by
+    the process P2 while the process P2 badly needs the ressource R2 which is
+    currently being used by the process P1. Both P1 and P2 process enters a
+    long waiting state that is called "Deadlock".
+    </p>
+
+    <img src="./images/deadlock.jpg"/></img>
+
+    <p>Four deadlocks conditions:</p>
+    <ol>
+      <li>Circular wait condition</li>
+      <li>Hold and wait condition</li>
+      <li>No preemption condition</li>
+      <li>Mutual Exclusive condition</li>
+    </ol>
+
+    <h3>Circular wait condition</h3>
+    <p>
+    This is one of the deadlocks conditions. This situation (deadlock event)
+    happends when there are n number of processes and m number of resources.
+    </p>
+    <p>
+    For example, the process P1 badly needs the resource R1 which is
+    currently used by the process P2 while the process P1 badly needs the
+    resource r2 which is currently used by the process P3 while the process
+    P3 badly needs the resource R3 which is currently used by the process Pn
+    while the process Pn Badly needs the resource Rn which is currently used
+    by the process P1.
+    </p>
+
+    <h3>Hold and wait condition</h3>
+    <p>
+    It is one of the deadlock conditions. This situation (deadlock event)
+    occurs when the process P1, currently holding the resource waits to
+    obtain (get) another resource which is currently used by the process P2.
+    </p>
+    <p>
+    So the process P1 must wait until the resource is released by the
+    process P2.
+    </p>
+
+    <h3>No preemption condition</h3>
+    <p>
+    In the FIFO CPU Scheduling algorithm, each process has the privilege to
+    hold the CPU until its allocated CPU's burst time is expired. Even the
+    CPU can not ask any process to exit/leave before process' CPU's burst
+    time is expired. This situation is called "No preemption condition".
+    </p>
+
+    <h3>Mutual Exclusive condition</h3>
+    <p>
+    This situation (deadlock event) occurs when there is a non-sharable
+    sesource. For example, the resource is currently used by the process P1.
+    These processes must wait in the ready-queue until the resource printer
+    is released by the process P1.
+    </p>
+
+    <h2>Disk Scheduling Algorithms</h2>
+
+    <p>Four main Scheduling Algorithms:</p>
+    <ol>
+      <li>FCFS - First Come First Saved</li>
+      <li>SSTF - Shortest Seek Time First</li>
+      <li>SCAN</li>
+      <li>C-SCAN - Circular Scan</li>
+    </ol>
+    <p>
+    Each OS uses one of the DSA. Each algorithm has its own strength and
+    weakness.
+    </p>
+
+    <h3>FCFS - First Come First Saved</h3>
+
+    <img src="./images/FCFS.jpg"/></img>
+
+    <p>
+    The FCFS is not an efficient disk scheduling algorithm. It produces more
+    read/write head movements. In this algorithm, the CPU gives services to
+    the requests in a sequential order.
+    </p>
+
+    <h3>SSTF - Shortest Seek Time First</h3>
+
+    <img src="./images/SSTF.jpg"/></img>
+
+    <p>
+    The SSTF is not an efficient disk scheduling algorithm. It produces more
+    read/write head movements. In this algorithm, the CPU always gives
+    services to the requests which is very near/close to the current
+    read/write head position.
+
+    The read/write head moves to the request which is very near/close to it's
+    current positon.
+    </p>
+
+    <h3>SCAN</h3>
+
+    <img src="./images/SCAN.jpg"/></img>
+
+    <h3>C-SCAN</h3>
+
+    <img src="./images/C-SCAN.jpg"/></img>
+
+
+    <p></p>
+    <a href="index.html" id="return">RETURN</a>
+  </body>
+</html3
+<!-- vim:tabstop=2:softtabstop=2:shiftwidth=2:expandtab -->

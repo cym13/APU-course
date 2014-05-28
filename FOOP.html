@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./main.css" type="text/css"/>
+    <title>Further Object-Oriented Programming</title>
+  </head>
+
+  <body>
+    <h1>Further Object-Oriented Programming</h1>
+    <h2>What is Object Oriented Programming</h2>
+    <h3>Principles</h3>
+    <ul>
+      <li>Inheritance </li>
+      <li>Encapsulation</li>
+      <li>Polymorphism</li>
+      <li>Abstraction</li>
+    </ul>
+
+    <h2>Abstraction</h2>
+    <h3>Abstract classes and methods</h3>
+    <p>Abstract methods have to be overridden for the abstract class to be
+    instantiable.</p>
+    <ol id="code">
+      <li><span>abstract class Device {</span> </li>
+      <li><span>    protected int eid;</span> </li>
+      <li><span>    protected abstract void printDoc();</span> </li>
+      <li><span>}</span> </li>
+    </ol>
+
+    <h3>Interfaces</h3>
+    <p>They are similar to abstract classes but have no methods's body.
+    Classes are said to "implement" an interface (it's kind of the same way
+    objects are instantiated from classes).</p>
+    <ol id="code">
+      <li><span>interface Device {</span></li>
+      <li><span>    protected int eid;</span></li>
+      <li><span>    protected void printDoc();</span></li>
+      <li><span>}</span></li>
+      <li><span></span></li>
+      <li><span>abstract class Mobile implements Device {</span></li>
+      <li><span>    eid = 100;</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h3>Inheritance</h3>
+    <p>Java does not support multiple inheritance, but a class can implement
+    multiple interfaces.</p>
+    <ol id="code">
+      <li> <span>class C extends A implements E, F {</span> </li>
+      <li> <span>...</span> </li>
+      <li> <span>}</span> </li>
+    </ol>
+
+    <h2>Classes</h2>
+    <h3>Wrapper classes</h3>
+    <h4>Primitive Data Types</h4>
+    <p>A variable of primitive data type is passed by value, not by
+    reference.</p>
+    <ol>
+      <li>byte</li>
+      <li>short</li>
+      <li>int</li>
+      <li>long</li>
+      <li>float</li>
+      <li>double</li>
+      <li>char</li>
+      <li>boolean</li>
+    </ol>
+
+    <p>A wrapper class is used to wrap the data in a new object which
+    contains the value of that variable to pass it by reference.</p>
+    <ol id="code">
+      <li> <span>Integer intObject = new Integer(34);</span> </li>
+    </ol>
+
+    <p>A wrapper class is available by default for each primitive types:</p>
+    <ol>
+      <li>Byte</li>
+      <li>Short</li>
+      <li>Integer</li>
+      <li>Long</li>
+      <li>Float</li>
+      <li>Double</li>
+      <li>Character</li>
+      <li>Boolean</li>
+    </ol>
+
+    <p>Constructors are permissive and allow to create objects from
+    Strings. They also provide methods to convert objects into one another.</p>
+    <ol id="code">
+      <li> <span>Integer intObject = new Integer(34);</span> </li>
+      <li> <span>Integer intObject = new Integer("34");</span> </li>
+    </ol>
+
+    <p>Autoboxing and unboxing refers to an implicit call to the constructor
+    and auto unboxing to an implicit call to the *value() method.</p>
+    <ol id="code">
+      <li><span>Integer intObject = 34;</span></li>
+      <li><span>int x = intObject;</span></li>
+      <li><span>int x = intObject + 7;</span></li>
+      <li><span></span></li>
+      <li><span>Integer intObject = new Integer(34);</span></li>
+      <li><span>int x = intObject.intValue();</span></li>
+      <li><span>int x = intObject.intValue() + 7;</span></li>
+    </ol>
+
+    <h2>Nested class</h2>
+    <p>Those are just classes declared in other classes.</p>
+
+    <img src="./images/nested_classes.png"></img>
+
+    <h3>Static nested classes</h3>
+    <p>Those are nested class that are static. It is only a way to group and
+    encapsulate classes together.</p>
+
+    <ol id="code">
+      <li><span>class Outer {</span></li>
+      <li><span>    ...</span></li>
+      <li><span>    static class Nested {</span></li>
+      <li><span>        ...</span></li>
+      <li><span>    }</span></li>
+      <li><span></span></li>
+      <li><span>    static class Nested_bis {</span></li>
+      <li><span>        ...</span></li>
+      <li><span>    }</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h3>Inner classes</h3>
+    <p>An inner class is a nested class which is not static. It's use is
+    restricted inside the class in which it is declared. If you need to use
+    objects of a kind that you do not want to mix with other classes, inner
+    classes are a good way to protect them.</p>
+
+    <ol id="code">
+      <li><span>class Outer {</span></li>
+      <li><span>    ...</span></li>
+      <li><span>    class Inner {</span></li>
+      <li><span>        ...</span></li>
+      <li><span>    }</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h3>Anonymous classes</h3>
+    <p>It's just a one-time on-the-fly declaration and instanciation of a
+    class. It can be useful to prevent memory from being reserved for a class
+    that would be used only once. It is an inner class.</p>
+    <ol id="code">
+      <li><span>interface AInterface {</span></li>
+      <li><span>    void aMethode();</span></li>
+      <li><span>}</span></li>
+      <li><span></span></li>
+      <li><span>class AnonyClass {</span></li>
+      <li><span>    AInterface intf = new AInterface(){</span></li>
+      <li><span>        void aMethode(){;</span></li>
+      <li><span>            System.out.println("Hellow World!");</span></li>
+      <li><span>        };</span></li>
+      <li><span>    };</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h2>Strings</h2>
+    <h3>java.lang.String</h3>
+    <ol id="code">
+      <li><span>String newString = new String(stringLiteral);</span></li>
+      <li><span>String str = "ABCDE";</span></li>
+    </ol>
+    <p>
+    A String object is immutable, but we can redefine the variable.
+    </p>
+    <ol id="code">
+      <li><span>String s = "Java";</span></li>
+      <li><span>s = "HTML";</span></li>
+    </ol>
+    <p>
+    Concatenation creates another string object in memory so memory
+    comsuption doubles with each concatenation. One must be prudent.
+    </p>
+    <ol id="code">
+      <li><span>String s3 = s1.concat(s2);</span></li>
+      <li><span>s3 = s1 + s2;</span></li>
+    </ol>
+
+    <h3>StringBuffer</h3>
+    <p>
+    The StringBuffer class contains many methods that work on the original
+    string.
+    </p>
+    <ol id="code">
+      <li><span>StringBuffer sb = new StringBuffer("Hello");</span></li>
+      <li><span>sb.append(" World!");</span></li>
+      <li><span>sb.insert(11, "HTML and ");</span></li>
+      <li><span></span></li>
+      <li><span>sb.delete(8, 11);</span></li>
+      <li><span>sb.deleteCharAt(8);</span></li>
+      <li><span></span></li>
+      <li><span>sb.reverse();</span></li>
+      <li><span>sb.replace(11, 15, "HTML");</span></li>
+      <li><span>sb.setCharAt(0, 'w');</span></li>
+    </ol>
+    <p>
+    StringBuilder basically proposes the same methods but is not thread-safe
+    so there are concurency problems, StringBuffer must be used when dealing
+    with multiple users.
+    </p>
+
+    <h3>StringTokenizer</h3>
+    <p>
+    This is used to break a string into pieces so that information contained
+    in it can be retrieved and processed. For exemple it can be used to read
+    individual word form a string.
+    </p>
+    <ol id="code">
+      <li><span>StringTokenizer st = new StringTokenizer("This is a test.");</span></li>
+      <li><span>st = new StringTokenizer("This|is|a|test.", '|');</span></li>
+      <li><span>while(st.hasMoreTokens()) {</span></li>
+      <li><span>    System.out.println(st.nextToken());</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h2>File I/O</h2>
+    <p>
+    The File class is used to obtain file properties, rename file, delete
+    file. It cat encapsualets the properties of a file but doesn't contains
+    methods for I/O. For that we use FileWriter and FileReader. In the same
+    way, a PrintWriter class exists that is more powerful than the FileWriter
+    one.
+    </p>
+    <ol id="code">
+      <li><span>FileWriter output = new FileWriter("temp.txt");</span></li>
+      <li><span>output.write("Java IO operations");</span></li>
+      <li><span>output.close();</span></li>
+      <li><span></span></li>
+      <li><span>FileReader input = new FileReader("temp.txt");</span></li>
+      <li><span>int code = input.read();</span></li>
+      <li><span>System.out.println((char)code);</span></li>
+      <li><span>input.close();</span></li>
+      <li><span>// FileReader can only read one character at a time</span></li>
+      <li><span></span></li>
+      <li><span>BuffererdReader br = new BuffererdReader(new FileReader(f));</span></li>
+      <li><span>String line;</span></li>
+      <li><span>while ((line = br.readLine()) != null) {</span></li>
+      <li><span>    System.out.println(line);</span></li>
+      <li><span>}</span></li>
+      <li><span></span></li>
+      <li><span>br.close();</span></li>
+    </ol>
+
+    <p>
+    The Scanner class can be used to read a file, it provides ways to read
+    integers directly and to set delimiters.
+    </p>
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Scanner.html">
+    RTFM</a>
+    <ol id="code">
+      <li><span>try {</span></li>
+      <li><span>    Scanner fileScan = new Scanner(new File("temp.txt"));</span></li>
+      <li><span>    while (fileScan.hasNext()) {</span></li>
+      <li><span>        System.out.println(fileScan.next());</span></li>
+      <li><span>        sum += fileScan.nextInt();</span></li>
+      <li><span>    }</span></li>
+      <li><span>}</span></li>
+      <li><span>catch (IOException e) {</span></li>
+      <li><span>    System.out.println("oops");</span></li>
+      <li><span>}</span></li>
+      <li><span>finally {</span></li>
+      <li><span>    System.out.println("Sum: " + sum);</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+    <h2>Serialization</h2>
+    <p>
+    The serialization is a process in which a data structure such as an
+    object is transformed into a representation (generaly textual) of this
+    object so that it can be stored or transfered.
+    </p>
+    <p>
+    For example, if we have an object that we want to be able to keep intact
+    from one instance of the program to the other, we can serialize it
+    (getting a representation in return) and write this representation to a
+    file. Next time we launch the program, we read the file, apply the
+    inverse transformation to get the object from the representation and be
+    able to use it as before.
+    </p>
+    <p>
+    It is also often used to transfer an object between two programms, for
+    example in a multiplayer game you might want to send an object from a
+    computer to the other. Serialization allows you to send its
+    representation and get the object back at the other end of the link.
+    </p>
+    <p>
+    There are many communication formats, for example json, yaml, messagepack
+    or pickle. In java, the serialization is handled automatically by
+    implementing the java.io.Serializable interface. It is convenient to use
+    when dealing with java only but not compatible with other programming
+    languages.
+    </p>
+    <ol id="code">
+      <li><span>class object implements Serializable {</span></li>
+      <li><span>    String name;</span></li>
+      <li><span>    public toString() {</span></li>
+      <li><span>        return name;</span></li>
+      <li><span>    }</span></li>
+      <li><span>}</span></li>
+    </ol>
+
+
+    <h2>Threading</h2>
+    <h3>Concept of thread</h3>
+    <p>
+    A thread is a flow of instructions from beginning to end in a program.
+    </p>
+    <p>
+    Multithreading makes your program more responsive and interactive,
+    enhancing performance. However, it increases program complexity and can
+    be the source of many bugs.
+    </p>
+
+    <ol id="code">
+    <li><span>public class ThreadDemo {</span></li>
+    <li><span>    public static void main(String[] args) {</span></li>
+    <li><span>        TaskThread t1 = new TaskThread("ASSIGNMENT");</span></li>
+    <li><span>        t1.start();//start to run the task</span></li>
+    <li><span> </span></li>
+    <li><span>        Task test = new Task("CLASS TEST");</span></li>
+    <li><span>        //Thread</span></li>
+    <li><span>        Thread worker = new Thread(test);</span></li>
+    <li><span>        worker.start();</span></li>
+    <li><span>    }</span></li>
+    <li><span>} </span></li>
+    <li><span>//FIRST METHOD</span></li>
+    <li><span>class TaskThread extends Thread{</span></li>
+    <li><span>    String name;</span></li>
+    <li><span> </span></li>
+    <li><span>    public TaskThread(String name) {</span></li>
+    <li><span>        this.name = name;</span></li>
+    <li><span>    }</span></li>
+    <li><span> </span></li>
+    <li><span>    @Override</span></li>
+    <li><span>    public void run() {</span></li>
+    <li><span>        System.out.println("TASK: " + name + " IS RUNNING...");</span></li>
+    <li><span>    }</span></li>
+    <li><span>} </span></li>
+    <li><span> </span></li>
+    <li><span>//SECOND METHOD</span></li>
+    <li><span>class Task implements Runnable{</span></li>
+    <li><span>    String name;</span></li>
+    <li><span> </span></li>
+    <li><span>    public Task(String name) {</span></li>
+    <li><span>        this.name = name;</span></li>
+    <li><span>    }</span></li>
+    <li><span> </span></li>
+    <li><span>    @Override</span></li>
+    <li><span>    public void run() {</span></li>
+    <li><span>        System.out.println("TASK: " + name + " IS NOW RUNNING...");</span></li>
+    <li><span>    }</span></li>
+    <li><span>} </span></li>
+    </ol>
+
+    <p>
+    Threads can communicate through the Thread class. See the Thread class.
+    </p>
+    <p>A thread group is a set of threads. See the ThreadGroup class.</p>
+
+    <h2>Collections</h2>
+    <p>
+    A collection is a standart implementation of a data structure in
+    java. There are collections for linked-lists, FIFO, LIFO, hash-maps and
+    more. If you are going to use such a data structure you really should use
+    the standard implementation that will be more reliable and optimized.
+    </p>
+
+    <img src="./images/containers.jpg"></img>
+
+    <a href="index.html" id="return">RETURN</a>
+  </body>
+</html>
+<!-- vim:tabstop=2:softtabstop=2:shiftwidth=2:expandtab -->

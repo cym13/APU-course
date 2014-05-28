@@ -1,0 +1,86 @@
+* {
+    margin-right: 5%;
+    margin-left: 5%;
+    background-color: #111111;
+    font-family: 'Ubuntu', serif;
+}
+
+p {
+    text-align: justify;
+}
+
+body, body * {
+    background-color: #AAAAAA;
+}
+
+em {
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
+}
+
+ol#code, ol#code * {
+    color: lightgray;
+    background-color: #111111;
+}
+
+ol#code span {
+    color: orange;
+    background-color: #111111;
+    font-family: 'Terminus', serif;
+}
+
+a {
+    color: #0000AA;
+    color: #3311AA;
+    color: #CC0000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a#return {
+    display: block;
+    text-align: center;
+    background-color: #000000;
+    margin: auto;
+}
+
+h1 {
+    font-size: 3em;
+    text-align: center;
+    background-color: #FF8811;
+    margin: 1em 0 1em 0;
+    min-height: 2em;
+    vertical-align: middle;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+em#important {
+    display: block;
+    text-align: center;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url("./fonts/Ubuntu-BI.ttf");
+    src: url("./fonts/Ubuntu-C.ttf");
+    src: url("./fonts/Ubuntu-LI.ttf");
+    src: url("./fonts/Ubuntu-L.ttf");
+    src: url("./fonts/UbuntuMono-BI.ttf");
+    src: url("./fonts/UbuntuMono-B.ttf");
+    src: url("./fonts/UbuntuMono-RI.ttf");
+    src: url("./fonts/UbuntuMono-R.ttf");
+    src: url("./fonts/Ubuntu-RI.ttf");
+    src: url("./fonts/Ubuntu-R.ttf");
+}
+
+@font-face {
+    font-family: 'Terminus';
+    src: url("./fonts/TerminusBold.ttf");
+    src: url("./fonts/Terminus.ttf");
+}
